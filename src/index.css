@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+
+.logo-1 {
+    animation: spinbox 17s linear infinite;
+}
+
+.logo-2 {
+    animation: spinbox 2s linear infinite;
+}
+
+@keyframes spinbox{
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   Animasi Bottom Navigation
+   ============================================ */
+
+.nav-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    transition: all 0.4s ease;
+}
+
+/* Tombol AKTIF - animasi warna gradien indah */
+.nav-btn.active {
+    background: linear-gradient(135deg, rgba(232, 121, 249, 0.4), rgba(99, 102, 241, 0.4), rgba(34, 211, 238, 0.4));
+    animation: nav-glow 2.5s ease-in-out infinite;
+    animation-delay: 0.4s;
+}
+
+/* Cincin ripple di tombol aktif */
+.nav-btn.active::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    border: 2px solid rgba(232, 121, 249, 0.5);
+    animation: nav-ring 2s ease-in-out infinite;
+    animation-delay: 0.4s;
+    pointer-events: none;
+}
+
+@keyframes nav-glow {
+    0%, 100% {
+        background: linear-gradient(135deg, rgba(232, 121, 249, 0.4), rgba(99, 102, 241, 0.4), rgba(34, 211, 238, 0.4));
+        box-shadow: 0 0 12px rgba(232, 121, 249, 0.45), 0 0 24px rgba(99, 102, 241, 0.2);
+    }
+    50% {
+        background: linear-gradient(135deg, rgba(34, 211, 238, 0.5), rgba(99, 102, 241, 0.5), rgba(232, 121, 249, 0.5));
+        box-shadow: 0 0 20px rgba(34, 211, 238, 0.55), 0 0 40px rgba(99, 102, 241, 0.35);
+    }
+}
+
+@keyframes nav-ring {
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+/* Tombol sedang DELAY pindah halaman */
+.nav-btn.navigating {
+    animation: nav-loading 0.6s ease-in-out infinite;
+}
+
+@keyframes nav-loading {
+    0%, 100% {
+        background: rgba(232, 121, 249, 0.3);
+        box-shadow: 0 0 8px rgba(232, 121, 249, 0.4);
+        transform: scale(1);
+    }
+    50% {
+        background: rgba(34, 211, 238, 0.4);
+        box-shadow: 0 0 18px rgba(34, 211, 238, 0.6);
+        transform: scale(1.1);
+    }
+}
+
+
+
