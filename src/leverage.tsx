@@ -80,7 +80,7 @@ function Leverage () {
                         <p className="text-[1.3rem]">{leverage}x</p>
                     </div>
 
-                    <input type="range" min="1" max="100" value={leverage} onChange={handleChangeLeverage} className="cursor-pointer w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-[#ff4e71] focus:outline-none" />
+                    <input type="range" min="1" max="100" value={leverage} onChange={handleChangeLeverage} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-[#ff4e71] focus:outline-none" />
 
                     <div className="flex text-[0.8rem] text-white/30 justify-between mt-2">
                         <p>1x</p>

@@ -27,7 +27,7 @@ function Dashboard01() {
 
                 <div className="flex w-full justify-center relative mt-18">
                     <div className="flex justify-center items-center logo-1 border-2 border-orange-400/80 w-40 h-40 rounded-3xl relative">
-                        <div className="logo-2 flex justify-center items-center h-14 w-14 rounded-full bg-gradient-to-br from-[#ff4e71] via-[#ff6b52] to-[#ffaa52] blur-[3px] absolute"></div>
+                        <div className="logo-2 flex justify-center items-center h-14 w-14 rounded-full bg-linear-to-br from-[#ff4e71] via-[#ff6b52] to-[#ffaa52] blur-[3px] absolute"></div>
                         <svg className="logo-2 z-50 w-12 h-12 overflow-visible" viewBox="0 0 100 87" fill="none">
                                 <polygon 
                                     points="25,2 75,2 98,43.5 75,85 25,85 2,43.5" 
@@ -46,7 +46,7 @@ function Dashboard01() {
                 </div>
 
                 <div className="flex justify-center mt-8 w-full">
-                    <button type='button' onClick={handleStart} className="bg-gradient-to-br from-[#ff4e71] via-[#ff6b52] to-[#ffaa52] rounded-lg px-15 py-3 cursor-pointer w-full" >MULAI SEKARANG</button>
+                    <button type='button' onClick={handleStart} className="bg-linear-to-br from-[#ff4e71] via-[#ff6b52] to-[#ffaa52] rounded-lg px-15 py-3 cursor-pointer w-full" >MULAI SEKARANG</button>
                 </div>
             </div>
 
