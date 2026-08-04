@@ -8,6 +8,19 @@ import BtnNavigation from "./bottomnavigation";
 //======================================
 // interface Fetch crypto
 //======================================
+type CoinId = 'bitcoin' | 'solana' | 'ethereum' | 'avici';
+interface CoinConfig {
+    id: CoinId;
+    symbol: string;
+    label: string;
+}
+
+const SUPPORTED_COINS: CoinConfig[] = [
+    { id: 'bitcoin', symbol: 'BINANCE:BTCUSDT', label: 'BTC' },
+    { id: 'solana', symbol: 'BINANCE:SOLUSDT', label: 'SOL' },
+    { id: 'ethereum', symbol: 'BINANCE:ETHUSDT', label: 'ETH' },
+    { id: 'avici', symbol: 'MEXC:AVICIUSDT', label: 'AVC' },
+];
  interface MarketCrypto {
         name: string;
         current_price: number;
@@ -28,11 +41,11 @@ function Utama(): React.JSX.Element {
     //pengaturan tambahan
     //================================================
 
-    const [name, setName] = useState("bitcoin");
+    const [name, setName] = useState<CoinId>("bitcoin");
     const [symbol, setSymbol] = useState("BINANCE:BTCUSDT");
 
     //buat fungsi helper dengan typescript
-    const changeCoin = (newId: string, newSymbol: string ) => {
+    const changeCoin = (newId: CoinId, newSymbol: string ) => {
         if (name !== newId) {
             setName(newId);
             setSymbol(newSymbol);
@@ -52,6 +65,9 @@ function Utama(): React.JSX.Element {
             const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${name}`
             try {
                 const response = await fetch(url);
+                if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const data: MarketCrypto[] = await response.json();
 
                 if (data && data.length > 0){ //memastikan data tidak null dan data yang dikirim tidak kosong minimal 1 item
@@ -59,8 +75,8 @@ function Utama(): React.JSX.Element {
                     } 
 
                 } 
-            catch {
-                console.error("Gagal mengambil data:", "error");
+            catch (error) {
+                console.error("Gagal mengambil data:", error);
             }
         };
 
@@ -95,10 +111,14 @@ function Utama(): React.JSX.Element {
 
             <div className="flex w-full pl-4 mt-6">
                 <div className="flex gap-2">
-                    <button type="button" onClick={() => changeCoin("bitcoin", "BINANCE:BTCUSDT")} className={`px-4 rounded-2xl cursor-pointer py-0.5 transition-all duration-200 hover:bg-slate-200/30 ${name === "bitcoin" ? "text-white shadow-[0_0_15px_rgba(232,121,249,0.3)] ring-1 ring-fuchsia-300/50" : "text-white/30 bg-slate-200/20"}`}>BTC</button>
-                    <button type="button" onClick={() => changeCoin("solana", "BINANCE:SOLUSDT")} className={`px-4 rounded-2xl cursor-pointer py-0.5 transition-all duration-200 hover:bg-slate-200/30  ${name === "solana" ? "text-white shadow-[0_0_15px_rgba(232,121,249,0.3)] ring-1 ring-fuchsia-300/50" : "text-white/30 bg-slate-200/20"}`}>SOL</button>
-                    <button type="button" onClick={() => changeCoin("ethereum", "BINANCE:ETHUSDT")} className={`px-4 rounded-2xl cursor-pointer py-0.5 transition-all duration-200 hover:bg-slate-200/30  ${name === "ethereum" ? "text-white shadow-[0_0_15px_rgba(232,121,249,0.3)] ring-1 ring-fuchsia-300/50" : "text-white/30 bg-slate-200/20"}`}>ETH</button>
-                    <button type="button" onClick={() => changeCoin("avici", "MEXC:AVICIUSDT")} className={`px-4 rounded-2xl cursor-pointer py-0.5 transition-all duration-200 hover:bg-slate-200/30  ${name === "avici" ? "text-white shadow-[0_0_15px_rgba(232,121,249,0.3)] ring-1 ring-fuchsia-300/50" : "text-white/30 bg-slate-200/20"}`}>AVC</button>
+                    {SUPPORTED_COINS.map((coin) => (
+                        <button
+                            key={coin.id}
+                            type="button"
+                            onClick={() => changeCoin(coin.id, coin.symbol)}
+                            className={`px-4 rounded-2xl cursor-pointer py-0.5 transition-all duration-200 hover:bg-slate-200/30 ${name === coin.id ? "text-white shadow-[0_0_15px_rgba(232,121,249,0.3)] ring-1 ring-fuchsia-300/50": "text-white/30 bg-slate-200/20"}`}>
+                            {coin.label}
+                        </button>))}
                 </div>
             </div>
 

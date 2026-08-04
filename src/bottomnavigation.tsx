@@ -5,22 +5,26 @@ import Hexagon from "./assets/hexagon-white.png"
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
-function BtnNavigation () {
+// 1. Tipe rute eksplisit
+type AppPath = '/Utama' | '/Leverage' | '/Portofolio' | '/';
+
+
+function BtnNavigation (): React.JSX.Element {
 
         const navigate = useNavigate();
         const location = useLocation();
-        const [navigating, setNavigating] = useState<string | null>(null);
+        const [navigating, setNavigating] = useState<AppPath | null>(null);
 
-        const isActive = (path: string): string => {
+        const isActive = (path: AppPath): string => {
             if (navigating) return "";
             return location.pathname === path ? "active" : "";
         };
 
-        const isNavigating = (path: string): string => {
+        const isNavigating = (path: AppPath): string => {
             return navigating === path ? "navigating" : "";
         };
 
-        const navigateWithDelay = (path: string, handler: () => void): void => {
+        const navigateWithDelay = (path: AppPath, handler: () => void): void => {
             // Jika sudah di halaman tujuan, tidak perlu apa-apa
             if (location.pathname === path) return;
             
@@ -33,8 +37,6 @@ function BtnNavigation () {
             // Delay sebelum pindah halaman (800ms)
             setTimeout(() => {
                 handler();
-                // Reset status setelah navigasi
-                setTimeout(() => setNavigating(null), 600);
             }, 800);
         };
 
@@ -46,7 +48,7 @@ function BtnNavigation () {
             navigate('/Leverage');
         };
 
-        const handleportolio = (): void => {
+        const handleportofolio = (): void => {
             navigate('/Portofolio')
         }
 
@@ -58,21 +60,26 @@ function BtnNavigation () {
         return (
                 <div className="mt-auto pb-4 w-full">
                     <div className="flex w-full justify-around items-center">
-                        <div className="nav-btn cursor-pointer" onClick={() => {}}>
+                        <button type="button" className="nav-btn cursor-pointer" onClick={() => {}}>
                             <img src={Gear} alt="" className="w-5 cursor-pointer" />
-                        </div>
-                        <div className={`nav-btn cursor-pointer ${isActive('/Portofolio')} ${isNavigating('/Portofolio')}`} onClick={() => navigateWithDelay('/Portofolio', handleportolio)}>
+                        </button>
+
+                        <button type="button" className={`nav-btn cursor-pointer ${isActive('/Portofolio')} ${isNavigating('/Portofolio')}`} onClick={() => navigateWithDelay('/Portofolio', handleportofolio)}>
                             <img src={Layers} alt="" className="w-5 cursor-pointer" />
-                        </div>
-                        <div className={`nav-btn cursor-pointer ${isActive('/Utama')} ${isNavigating('/Utama')}`} onClick={() => navigateWithDelay('/Utama', handleutama)}>
+                        </button>
+
+                        <button type="button" className={`nav-btn cursor-pointer ${isActive('/Utama')} ${isNavigating('/Utama')}`} onClick={() => navigateWithDelay('/Utama', handleutama)}>
                             <img src={Hexagon} alt="" className="w-5 cursor-pointer" />
-                        </div>
-                        <div className={`nav-btn cursor-pointer ${isActive('/Leverage')} ${isNavigating('/Leverage')}`} onClick={() => navigateWithDelay('/Leverage', handleleverage)}>
+                        </button>
+
+                        <button type="button" className={`nav-btn cursor-pointer ${isActive('/Leverage')} ${isNavigating('/Leverage')}`} onClick={() => navigateWithDelay('/Leverage', handleleverage)}>
                             <img src={Chart} alt="" className="w-5 cursor-pointer" />
-                        </div>
-                        <div className="flex justify-center items-center w-10 h-10 cursor-pointer">
+                        </button>
+
+                        <button type="button" className="flex justify-center items-center w-10 h-10 cursor-pointer">
                             <span className="text-white text-3xl w-5 h-5 pb-5 flex justify-center items-center">...</span>
-                        </div>
+                        </button>
+
                     </div>
                 </div>
         )

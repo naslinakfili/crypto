@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import BtnNavigation from "./bottomnavigation";
 
-function Leverage () {
+function Leverage (): React.JSX.Element {
     const navigate = useNavigate();
 
 
-     const handleutama = () => {
+     const handleutama = (): void => {
         navigate('/Utama');
     };
 
@@ -16,8 +16,8 @@ function Leverage () {
     // pengaturan
     //==============================
 
-    const [leverage, setLeverage] = useState(10);
-    const [posisi, setPosisi] = useState(1000);
+    const [leverage, setLeverage] = useState<number>(10);
+    const [posisi, setPosisi] = useState<number>(1000);
 
     //hitung margin
     const margin = posisi> 0 ? posisi / leverage : 0;
@@ -28,18 +28,22 @@ function Leverage () {
     //hitung likuiditas
     const likuiditas = leverage> 1 ? 100 / leverage : 100;
 
-    const formatDollar = (value: number) => new Intl.NumberFormat('en-US', {
+    const formatDollar = (value: number): string => new Intl.NumberFormat('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
     }).format(value);
 
 
-    function handleChangePosisi(event: React.ChangeEvent<HTMLInputElement>) {
-        setPosisi(Number(event.target.value));
-        
+    type PresetPosisi = 100 | 500 | 1000 | 5000;
+
+    function handlePresetPosisi(amount: PresetPosisi): void {
+        setPosisi(amount);     
     }
 
-    
+    function handleChangePosisi(event: React.ChangeEvent<HTMLInputElement>): void {
+        setPosisi(Number(event.target.value));
+    }
+
 
     function handleChangeLeverage(event: React.ChangeEvent<HTMLInputElement>)  {
         setLeverage(Number(event.target.value));
@@ -67,10 +71,10 @@ function Leverage () {
                     <p className="text-white/30 text-[0.7rem]">UKURAN POSISI (USDT)</p>
                     <p className="text-2xl font-bold mt-2 mb-4"><span>$</span> <input className="max-w-42 focus:outline-none" type="number" value={posisi} onChange={handleChangePosisi} min="10" /></p>
                     <div className="flex gap-1.5 text-white/30 text-[0.75rem] font-bold">
-                        <button onClick={() => setPosisi(100)} className="bg-white/10 px-2 py-0.5 rounded-2xl cursor-pointer">$100</button>
-                        <button onClick={() => setPosisi(500)} className="bg-white/10 px-2 py-0.5 rounded-2xl cursor-pointer">$500</button>
-                        <button onClick={() => setPosisi(1000)} className="bg-white/10 px-2 py-0.5 rounded-2xl cursor-pointer">$1,000</button>
-                        <button onClick={() => setPosisi(5000)} className="bg-white/10 px-2 py-0.5 rounded-2xl cursor-pointer">$5,000</button>
+                        <button onClick={() => handlePresetPosisi(100)} className="bg-white/10 px-2 py-0.5 rounded-2xl cursor-pointer">$100</button>
+                        <button onClick={() => handlePresetPosisi(500)} className="bg-white/10 px-2 py-0.5 rounded-2xl cursor-pointer">$500</button>
+                        <button onClick={() => handlePresetPosisi(1000)} className="bg-white/10 px-2 py-0.5 rounded-2xl cursor-pointer">$1,000</button>
+                        <button onClick={() => handlePresetPosisi(5000)} className="bg-white/10 px-2 py-0.5 rounded-2xl cursor-pointer">$5,000</button>
                     </div>
                 </div>
 

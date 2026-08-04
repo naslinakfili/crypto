@@ -1,8 +1,24 @@
 import User from './assets/user-white.png'
 import BtnNavigation from './bottomnavigation'
 
+interface CryptoAsset {
+    id: string;
+    name: string;
+    amount: number;
+    valueUsd: number;
+    currentPrice: number;
+    change24h: number;
+}
 
-function Portofolio() {
+// Contoh data mock
+const ASSETS_DATA: CryptoAsset[] = [
+    { id: 'btc', name: 'Bitcoin', amount: 0.42, valueUsd: 26978, currentPrice: 64233.93, change24h: 1.17 },
+    { id: 'eth', name: 'Ethereum', amount: 2.5, valueUsd: 8500, currentPrice: 3400.00, change24h: 2.34 },
+];
+
+
+function Portofolio(): React.JSX.Element {
+
 
     return ( 
        <div className='flex justify-center min-h-screen items-center w-full bg-black text-white ' >
@@ -33,42 +49,22 @@ function Portofolio() {
             </div>
 
             <div className='flex justify-center w-full mt-2 mb-8'>
-                <ul className='w-full'>
-                    <li className='flex justify-between px-4 py-4 w-full bg-white/10 rounded-2xl mt-3'>
-                        <div>
-                            <h1 className='font-bold'>Bitcoin</h1>
-                            <p className='text-[0.8rem] text-white/30'>0.42 unit ($26,978)</p>
-                        </div>
-
-                        <div>
-                            <p className='font-bold'>$64,233.93</p>
-                            <p className='text-[0.85rem] text-green-400'>↗ 1.17%</p>
-                        </div>
-                    </li>
-
-                    <li className='flex justify-between px-4 py-4 w-full bg-white/10 rounded-2xl mt-3'>
-                        <div>
-                            <h1 className='font-bold'>Bitcoin</h1>
-                            <p className='text-[0.8rem] text-white/30'>0.42 unit ($26,978)</p>
-                        </div>
-
-                        <div>
-                            <p className='font-bold'>$64,233.93</p>
-                            <p className='text-[0.85rem] text-green-400'>↗ 1.17%</p>
-                        </div>
-                    </li>
-
-                    <li className='flex justify-between px-4 py-4 w-full bg-white/10 rounded-2xl mt-3'>
-                        <div>
-                            <h1 className='font-bold'>Bitcoin</h1>
-                            <p className='text-[0.8rem] text-white/30'>0.42 unit ($26,978)</p>
-                        </div>
-
-                        <div>
-                            <p className='font-bold'>$64,233.93</p>
-                            <p className='text-[0.85rem] text-green-400'>↗ 1.17%</p>
-                        </div>
-                    </li>
+                <ul className="w-full">
+                    {ASSETS_DATA.map((asset) => (
+                        <li key={asset.id} className="flex justify-between px-4 py-4 w-full bg-white/10 rounded-2xl mt-3">
+                            <div>
+                                <h1 className="font-bold">{asset.name}</h1>
+                                <p className="text-[0.8rem] text-white/30">
+                                    {asset.amount} unit (${asset.valueUsd.toLocaleString()})
+                                </p>
+                            </div>
+                            <div>
+                                <p className="font-bold">${asset.currentPrice.toLocaleString()}</p>
+                                <p className={`text-[0.85rem] ${asset.change24h >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                    {asset.change24h >= 0 ? '↗' : '↙'} {asset.change24h}%
+                                </p>
+                            </div>
+                        </li>))}
                 </ul>
             </div>
 

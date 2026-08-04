@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom'
 import User from "./assets/user-white.png"
 
 
-function Dashboard01() {
+function Dashboard01(): React.JSX.Element {
     const navigate = useNavigate();
 
-    const handleStart = () => {
+    const handleStart = (): void => {
         navigate('/Utama');
     };
 

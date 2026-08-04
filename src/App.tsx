@@ -5,7 +5,7 @@ import Utama from "./utama"
 import Portofolio from "./portofolio"
 import Leverage from "./leverage"
 
-function App() {
+function App(): React.JSX.Element {
   return (
     <>
       <Routes>
